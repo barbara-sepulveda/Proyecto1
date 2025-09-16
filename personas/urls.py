@@ -10,4 +10,7 @@ urlpatterns = [
     path("usuarios/<int:pk>/", usuario_detalle, name="usuario_detalle"),
     path("usuarios/<int:pk>/editar/", usuario_editar, name="usuario_editar"),
     path("usuarios/<int:pk>/eliminar/", usuario_eliminar, name="usuario_eliminar"),
+    path('', views.home, name='home'),    
+    path('check_profile', views.check_profile, name='check_profile'), 
+    path('main_admin', views.main_admin, name='main_admin'),
 ]
