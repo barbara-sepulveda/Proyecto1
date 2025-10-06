@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Departamentos</h2>
+
+<form method="get" style="margin-bottom: 10px;">
+  <input type="text" name="q" value="{{ q }}" placeholder="Buscar departamento">
+  <button type="submit">Buscar</button>
+  <a href="{% url 'organizacion:departamento_crear' %}">+ Nuevo</a>
+</form>
+
+{% if departamentos %}
+<table border="1" cellspacing="0" cellpadding="5">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Encargado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for d in departamentos %}
+    <tr>
+      <td>{{ d.id }}</td>
+      <td>{{ d.nombre_departamento }}</td>
+      <td>
+        {% if d.direccion %}
+          {{ d.direccion.nombre_direccion }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+      <td>
+        {% if d.encargado %}
+          {{ d.encargado.user.get_full_name|default:d.encargado.user.username }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+      <td>
+        <a href="{% url 'organizacion:departamento_detalle' d.id %}">Ver</a>
+        <a href="{% url 'organizacion:departamento_editar' d.id %}">Editar</a> |
+        <a href="{% url 'organizacion:departamento_eliminar' d.id %}">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No hay departamentos registrados.</p>
+{% endif %}
+{% endblock %}
